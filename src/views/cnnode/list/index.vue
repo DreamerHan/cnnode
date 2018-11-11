@@ -14,7 +14,7 @@
                 </span>
 
                 <a class="last_time pull_right">
-                    <img class="user_avatar_small" src="https://avatars0.githubusercontent.com/u/7720611?v=4&s=120" alt="">
+                    <img class="user_avatar_small" :src="item.author.avatar_url" :alt="item.author.loginname">
                     <span class="last_active_time">16天前</span>
                 </a>
 
@@ -74,6 +74,7 @@ export default {
             limit : 26
         }
         getTopic(params).then( (data) => {
+            console.log(data);
             this.isLoading = false;
             this.list = data;
         } );
