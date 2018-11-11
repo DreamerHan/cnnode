@@ -1,0 +1,96 @@
+#topic_list{
+    padding:10px;
+    a{
+        color:#778087;
+    }
+    .cell{
+        position: relative;
+        padding:10px;
+        font-size:14px;
+        border-top:1px solid #f0f0f0;
+
+        &:nth-child(1){
+            border-top:none;
+        }
+
+        .user_avatar{
+            img{
+                width:30px;
+                height:30px;
+                border-radius: 3px;
+                vertical-align: middle;
+            }
+        }
+
+        .reply_count{
+            width:70px;
+            display:inline-block;
+            text-align: center;
+        
+            .count_of_replies{
+                color:#9e78c0;
+            }
+            .count_seperator{
+                font-size:10px;
+                margin:0 -3px;
+            }
+            .count_of_clicks{
+                font-size:10px;
+                color:#b4b4b4;
+            }
+        }
+
+        .last_time{
+            font-size:11px;
+            display:inline-block;
+            margin-left:20px;
+
+            .user_avatar_small{
+                width:18px; height:18px;
+                vertical-align: middle;
+                margin-right:.5em;
+                border-radius:3px;
+            }
+            .last_active_time{
+                text-align:right;
+                min-width:50px;
+                display:inline-block;
+                white-space: nowrap;
+            }
+        }
+
+        .topic_title_wraper{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            .topiclist_tab,.put_top, .put_good{
+                padding:2px 4px;
+                border-radius:3px;
+                color:#fff;
+                font-size:12px;
+            }
+
+            .topiclist_tab{
+                background:#e5e5e5;
+                color:#999;
+            }
+
+            .put_top, .put_good{
+                background:#80bd01;
+                color:#fff;
+            }
+
+            a.topic_title{
+                color:#333;
+                min-width:70%;
+                display: inline-block;
+                vertical-align: middle;
+                font-size:16px;
+                line-height:30px;
+            }
+
+        }
+    }
+
+
+}
