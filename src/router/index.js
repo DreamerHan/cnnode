@@ -9,6 +9,7 @@ let router = new VueRouter({
     routes: [{
             path: '/',
             name: '/',
+            redirect: { name: 'cnNode' },
             component: () =>
                 import ('@/views/layout/layout'),
             children: [

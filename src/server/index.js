@@ -12,3 +12,7 @@ export const getTopic = function(params) {
         params
     });
 }
+
+export const getTopicById = function(params) {
+    return axios.get(`/topic/:${params}`);
+}

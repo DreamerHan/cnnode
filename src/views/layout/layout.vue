@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout>
             <Header>
-                <Menu mode="horizontal" theme="dark" active-name="1"
+                <Menu mode="horizontal" theme="dark" :active-name="1"
                     @on-select="handleOnSelect"
                 >
                     <div class="layout-logo">这里是Logo</div>
@@ -19,7 +19,10 @@
             </Header>
             <Layout>
                 <Sider hide-trigger :style="{background: '#fff'}">
-                    <Menu width="auto" style="height:100%;">
+                    <Menu width="auto" style="height:100%;"
+                        @on-select="selectTab"
+                        :active-name="activeTab"
+                    >
                         <MenuItem :name="item.name" 
                             v-for="item of sliderMenu" 
                             :key="item.name"
@@ -28,7 +31,7 @@
                 </Sider>
                 <Layout :style="{padding: '10px'}">
                     <Content :style="{minHeight: '280px', background: '#fff'}">
-                        <router-view></router-view>
+                        <router-view @queryTab="getQuery"></router-view>
                     </Content>
                 </Layout>
             </Layout>
@@ -42,15 +45,39 @@ export default {
     data(){
         return {
             menu,
-            sliderMenu
+            sliderMenu,
+            activeTab : 'all'
         }
     },
     methods : {
-        handleOnSelect(name){
+        handleOnSelect(name){ //主菜单切换
             this.$router.push({
                 name : name
             });
+        },
+        selectTab(name){ //副菜单类型切换
+            if( this.$route.path === '/cnnode' ){
+                this.$router.push({
+                    query : {
+                        tab : name
+                    }
+                })
+            }else{
+                this.$router.push({
+                    name : 'cnNode',
+                    query : {
+                        tab : name
+                    }
+                });
+            }
+            
+        },
+        getQuery(query){
+            this.activeTab = query.tab;
         }
+    },
+    created(){
+        this.selectTab(this.activeTab);
     }
 }
 </script>

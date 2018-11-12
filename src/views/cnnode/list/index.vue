@@ -18,7 +18,7 @@
                     <span class="last_active_time">16天前</span>
                 </a>
 
-                <div class="topic_title_wraper">
+                <div class="topic_title_wraper" @click="checkDetail(item)">
                     <span :class="articleClass(item).class">{{articleClass(item).title}}</span>
                     <a class="topic_title">{{item.title}}</a>
                 </div>
@@ -31,19 +31,38 @@ import {getTopic} from '@/server';
 export default {
     data(){
         return {
-            isLoading : false,
+            isLoading : true,
             list : []
         }
     },
+    watch : {
+        $route : {
+            handler : 'query',
+            immediate : true
+        }
+    },
     methods: {
+        query(){
+            this.isLoading = true;
+            let {tab = 'all'} = this.$route.query;
+            let params = {
+                page : 1,
+                tab : tab,
+                limit : ''
+            }
+            getTopic(params).then( (data) => {
+                this.isLoading = false;
+                this.list = data;
+            } );
+        },
         articleClass(item){
             let result = { class : 'topiclist_tab' };
-            if( item.top || item.good ){
+            if( item.top ){
                 result = {
                     class : 'put_top',
                     title : '置顶'
                 }
-            }else if( item.good ){
+            }else if( !item.top && item.good ){
                 result = {
                     class : 'put_good',
                     title : '精华'
@@ -65,19 +84,18 @@ export default {
             }
 
             return result;
+        },
+        checkDetail(target){
+            this.$router.push({
+                name : 'Article', 
+                params : {
+                    articleId : target.id
+                }
+            });
         }
     },
-    created(){
-        let params = {
-            Number : 1,
-            tab : '',
-            limit : 26
-        }
-        getTopic(params).then( (data) => {
-            console.log(data);
-            this.isLoading = false;
-            this.list = data;
-        } );
+    mounted(){
+        this.$emit('queryTab', this.$route.query);
     }
 }
 </script>
