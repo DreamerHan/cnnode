@@ -24,6 +24,13 @@
                 </div>
             </div>
         </div>
+        <div class="txt-right pad_V10">
+            <Page :total="100" :current="page" :page-size="limit" 
+                show-elevator 
+                show-sizer
+                @on-change="changePage"
+            />
+        </div>
     </div>
 </template>
 <script>
@@ -32,7 +39,10 @@ export default {
     data(){
         return {
             isLoading : true,
-            list : []
+            list : [],
+            limit : 10,
+            page : 1,
+            tab : ''
         }
     },
     watch : {
@@ -44,12 +54,22 @@ export default {
     methods: {
         query(){
             this.isLoading = true;
-            let {tab = 'all'} = this.$route.query;
-            let params = {
-                page : 1,
-                tab : tab,
-                limit : ''
+
+            let {tab = 'all', page = 1} = this.$route.query;
+            
+            if( this.tab !== tab ){
+                
+                this.page = 1;
             }
+            this.tab = tab;
+            this.page = parseInt(page);
+
+            let params = {
+                page : this.page,
+                tab : tab,
+                limit : this.limit
+            }
+
             getTopic(params).then( (data) => {
                 this.isLoading = false;
                 this.list = data;
@@ -92,10 +112,21 @@ export default {
                     articleId : target.id
                 }
             });
+        },
+        changePage(page){
+            this.page = page;
+            this.$router.push({
+                query : {
+                    ...this.$route.query,
+                    page : page
+                }
+            })
+            this.query();
         }
     },
     mounted(){
-        this.$emit('queryTab', this.$route.query);
+        let {tab = 'all', page = "1"} = this.$route.query;
+        this.$emit('queryTab', {tab, page});
     }
 }
 </script>

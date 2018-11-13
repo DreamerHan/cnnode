@@ -17,11 +17,11 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
   import MarkdownHtml from './html'
+  import {getTopicById} from '@/server'
   export default {
     components: {MarkdownHtml},
     data(){
@@ -30,9 +30,17 @@
         content: {
           title : ''
         },
-        loading: true
+        loading: true,
+        articleId : this.$route.params.articleId
       }
     },
+    created(){
+      getTopicById(this.articleId).then( ( data ) => {
+        this.content.title = data.title;
+        this.html = data.content;
+        this.loading = false;
+      } )
+    }
   }
 </script>
 

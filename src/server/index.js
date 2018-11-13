@@ -14,5 +14,5 @@ export const getTopic = function(params) {
 }
 
 export const getTopicById = function(params) {
-    return axios.get(`/topic/:${params}`);
+    return axios.get(`/topic/${params}`);
 }

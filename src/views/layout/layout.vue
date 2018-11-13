@@ -30,7 +30,7 @@
                     </Menu>
                 </Sider>
                 <Layout :style="{padding: '10px'}">
-                    <Content :style="{minHeight: '280px', background: '#fff'}">
+                    <Content :style="{background: '#fff'}">
                         <router-view @queryTab="getQuery"></router-view>
                     </Content>
                 </Layout>
@@ -56,28 +56,23 @@ export default {
             });
         },
         selectTab(name){ //副菜单类型切换
-            if( this.$route.path === '/cnnode' ){
-                this.$router.push({
-                    query : {
-                        tab : name
-                    }
-                })
-            }else{
-                this.$router.push({
-                    name : 'cnNode',
-                    query : {
-                        tab : name
-                    }
-                });
-            }
-            
+            this.$router.push({
+                name : 'cnNode',
+                query : {
+                    tab : name,
+                    page : 1
+                }
+            });
         },
         getQuery(query){
             this.activeTab = query.tab;
+            this.$router.push({
+                query : {
+                    tab : query.tab,
+                    page : query.page
+                }
+            })
         }
-    },
-    created(){
-        this.selectTab(this.activeTab);
     }
 }
 </script>
